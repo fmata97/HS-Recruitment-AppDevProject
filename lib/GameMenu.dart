@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Game.dart';
 
 class GameMenu extends StatefulWidget {
   const GameMenu({super.key});
@@ -11,9 +12,7 @@ class GameMenuState extends State<GameMenu> {
   void _pushGame() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(title: Text("WELP")),
-      );
+      return Game();
     }));
   }
 
@@ -21,29 +20,62 @@ class GameMenuState extends State<GameMenu> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            backgroundColor: Colors.black,
-            appBar: AppBar(
-              centerTitle: true,
-              title: const Text('Snake Game'),
-              actions: [
-                IconButton(
-                    icon: const Icon(Icons.question_mark), onPressed: (() {}))
-              ],
-              backgroundColor: Colors.grey[900],
-            ),
+            backgroundColor: Color.fromARGB(255, 90, 227, 110),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  MaterialButton(
-                    onPressed: _pushGame,
-                    color: Colors.grey,
-                    child: const Text('Start'),
+                  Image.asset(
+                    'assets/images/snake.png',
+                    width: 300,
                   ),
-                  MaterialButton(
-                    onPressed: (() {}),
-                    color: Colors.grey,
-                    child: const Text('Stats'),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextButton(
+                      onPressed: _pushGame,
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        fixedSize: const Size(150, 50),
+                      ),
+                      child: const Text(
+                        'Start',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextButton(
+                      onPressed: (() {}),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        fixedSize: const Size(150, 50),
+                      ),
+                      child: const Text(
+                        'Stats',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: TextButton(
+                      onPressed: (() {}),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        fixedSize: const Size(150, 50),
+                      ),
+                      child: const Text(
+                        'Help',
+                        style: TextStyle(color: Colors.black, fontSize: 18),
+                      ),
+                    ),
                   ),
                 ],
               ),
