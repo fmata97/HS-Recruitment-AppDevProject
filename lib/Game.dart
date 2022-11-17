@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class Game extends StatefulWidget {
   const Game({super.key});
 
@@ -21,6 +23,16 @@ class _GameState extends State<Game> {
   String direction = 'down';
   bool paused = true;
   bool gameStarted = false;
+
+  void _updateHighScore() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    int highScore = prefs.getInt("score") ?? 0;
+
+    if (score > highScore) {
+      await prefs.setInt("score", score);
+    }
+  }
 
   void _popGame() {
     Navigator.of(context).pop();
@@ -58,6 +70,7 @@ class _GameState extends State<Game> {
   }
 
   void gameOver() {
+    _updateHighScore();
     setState(() {
       snake.removeLast();
     });
@@ -66,17 +79,33 @@ class _GameState extends State<Game> {
         barrierDismissible: false,
         builder: ((BuildContext context) {
           return AlertDialog(
-            title: const Text('Game Over!'),
-            content: Text('Score: $score'),
+            insetPadding: const EdgeInsets.all(90),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text('Game Over!'),
+              ],
+            ),
+            content: Text(
+              'Score: $score',
+              textAlign: TextAlign.center,
+            ),
+            actionsAlignment: MainAxisAlignment.center,
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   resetGame();
                 },
-                child: const Text('Close'),
+                child: const Text(
+                  'Close',
+                  style: TextStyle(color: Color.fromARGB(255, 90, 227, 110)),
+                ),
               )
             ],
+            elevation: 10,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           );
         }));
   }
