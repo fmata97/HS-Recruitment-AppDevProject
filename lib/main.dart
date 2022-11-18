@@ -22,6 +22,7 @@ class HomeSplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
+      duration: 1400,
       splash: Column(children: [
         Image.asset(
           "assets/images/snake.png",

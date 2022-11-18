@@ -12,11 +12,11 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
-  static const int rowSize = 15;
-  static const int colSize = 30;
+  static const int rowSize = 11;
+  static const int colSize = 20;
   static const int numberOfSquares = rowSize * colSize;
 
-  List<int> snake = [37, 52, 67, 82, 97];
+  List<int> snake = [27, 38, 49, 60, 71];
   int food = Random().nextInt(numberOfSquares ~/ 2) + numberOfSquares ~/ 2;
   int score = 0;
 
@@ -115,7 +115,7 @@ class _GameState extends State<Game> {
   }
 
   void resetGame() {
-    snake = [37, 52, 67, 82, 97];
+    snake = [27, 38, 49, 60, 71];
     food = Random().nextInt(numberOfSquares ~/ 2) + numberOfSquares ~/ 2;
     score = 0;
 
@@ -253,6 +253,7 @@ class _GameState extends State<Game> {
           Expanded(
               child: GestureDetector(
             onVerticalDragUpdate: (details) {
+              if (paused) return;
               if (direction != 'up' && details.delta.dy > 0) {
                 direction = 'down';
               } else if (direction != 'down' && details.delta.dy < 0) {
@@ -292,7 +293,7 @@ class _GameState extends State<Game> {
                     return Container(
                       margin: (isSnake
                           ? getMargin(index)
-                          : const EdgeInsets.all(1)),
+                          : const EdgeInsets.all(2)),
                       child: ClipRRect(
                         borderRadius: isSnake
                             ? getBorderRadius(index)
