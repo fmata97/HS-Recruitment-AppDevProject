@@ -24,7 +24,7 @@ class _GameState extends State<Game> {
   bool paused = true;
   bool gameStarted = false;
 
-  void _updateHighScore() async {
+  void _updateStats() async {
     final prefs = await SharedPreferences.getInstance();
 
     int highScore = prefs.getInt("score") ?? 0;
@@ -32,6 +32,9 @@ class _GameState extends State<Game> {
     if (score > highScore) {
       await prefs.setInt("score", score);
     }
+
+    int apples = prefs.getInt("apples") ?? 0;
+    await prefs.setInt("apples", apples + score);
   }
 
   void _popGame() {
@@ -46,6 +49,7 @@ class _GameState extends State<Game> {
       if (!this.mounted) {
         // if game was popped
         timer.cancel();
+        _updateStats();
         return;
       }
       updateSnake();
@@ -70,7 +74,7 @@ class _GameState extends State<Game> {
   }
 
   void gameOver() {
-    _updateHighScore();
+    _updateStats();
     setState(() {
       snake.removeLast();
     });

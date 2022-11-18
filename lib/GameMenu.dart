@@ -10,10 +10,13 @@ class GameMenu extends StatefulWidget {
 }
 
 class GameMenuState extends State<GameMenu> {
-  Future<int> getHighScore() async {
+  Future<List<int>> getStats() async {
     final prefs = await SharedPreferences.getInstance();
 
-    return (prefs.getInt("score") ?? 0);
+    int highScore = prefs.getInt("score") ?? 0;
+    int apples = prefs.getInt("apples") ?? 0;
+
+    return [highScore, apples];
   }
 
   void _pushGame() {
@@ -24,8 +27,8 @@ class GameMenuState extends State<GameMenu> {
   }
 
   void _showStats() {
-    getHighScore().then(
-      (score) {
+    getStats().then(
+      (values) {
         showDialog(
             context: context,
             builder: ((BuildContext context) {
@@ -46,8 +49,14 @@ class GameMenuState extends State<GameMenu> {
                     )
                   ],
                 ),
-                content:
-                    Text('Highest Score: $score', textAlign: TextAlign.center),
+                content: Center(
+                  widthFactor: 1,
+                  heightFactor: 0.8,
+                  child: Text(
+                    'Highest Score: ${values[0]}\nApples eaten: ${values[1]}',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                ),
                 actionsAlignment: MainAxisAlignment.center,
                 actions: <Widget>[
                   TextButton(
