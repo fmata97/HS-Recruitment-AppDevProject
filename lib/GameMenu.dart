@@ -49,13 +49,32 @@ class GameMenuState extends State<GameMenu> {
                     )
                   ],
                 ),
-                content: Center(
-                  widthFactor: 1,
-                  heightFactor: 0.8,
-                  child: Text(
-                    'Highest Score: ${values[0]}\nApples eaten: ${values[1]}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.star,
+                          color: Colors.yellow,
+                        ),
+                        Text(' Highest Score: ${values[0]}',
+                            style: const TextStyle(fontSize: 18)),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.apple,
+                          color: Color.fromARGB(255, 213, 1, 44),
+                        ),
+                        Text(' Apples eaten: ${values[1]}',
+                            style: const TextStyle(fontSize: 18))
+                      ],
+                    )
+                  ],
                 ),
                 actionsAlignment: MainAxisAlignment.center,
                 actions: <Widget>[
