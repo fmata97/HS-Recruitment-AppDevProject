@@ -22,7 +22,7 @@ class GameMenuState extends State<GameMenu> {
   void _pushGame() {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return Game();
+      return const Game();
     }));
   }
 
@@ -144,7 +144,7 @@ class GameMenuState extends State<GameMenu> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            backgroundColor: Color.fromARGB(255, 90, 227, 110),
+            backgroundColor: const Color.fromARGB(255, 90, 227, 110),
             body: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

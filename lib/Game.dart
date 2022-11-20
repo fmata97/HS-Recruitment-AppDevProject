@@ -16,11 +16,16 @@ class _GameState extends State<Game> {
   static const int colSize = 20;
   static const int numberOfSquares = rowSize * colSize;
 
+  // the snake body
   List<int> snake = [27, 38, 49, 60, 71];
+  // first food to spawn (on the lower part of the grid)
   int food = Random().nextInt(numberOfSquares ~/ 2) + numberOfSquares ~/ 2;
+  // score
   int score = 0;
 
+  // direction of the snake movement
   String direction = 'down';
+
   bool paused = true;
   bool gameStarted = false;
 
@@ -69,6 +74,7 @@ class _GameState extends State<Game> {
   }
 
   bool gameIsOver() {
+    // checks if the snake crashed into itself
     if (snake.sublist(0, snake.length - 2).contains(snake.last)) return true;
     return false;
   }
@@ -76,10 +82,12 @@ class _GameState extends State<Game> {
   void gameOver() {
     _updateStats();
     setState(() {
+      // remove the head so it doesn't appear inside the body
       snake.removeLast();
     });
     showDialog(
         context: context,
+        // tapping the screen outside the dialog box doesn't close it
         barrierDismissible: false,
         builder: ((BuildContext context) {
           return AlertDialog(
@@ -132,6 +140,7 @@ class _GameState extends State<Game> {
 
       switch (direction) {
         case 'up':
+          // top of the screen
           if (snake.last < rowSize) {
             snake.add(snake.last + numberOfSquares - rowSize);
           } else {
@@ -139,6 +148,7 @@ class _GameState extends State<Game> {
           }
           break;
         case 'down':
+          // bottom of the screen
           if (snake.last >= numberOfSquares - rowSize) {
             snake.add(snake.last - numberOfSquares + rowSize);
           } else {
@@ -146,6 +156,7 @@ class _GameState extends State<Game> {
           }
           break;
         case 'right':
+          // right side
           if ((snake.last + 1) % rowSize == 0) {
             snake.add(snake.last - rowSize + 1);
           } else {
@@ -153,6 +164,7 @@ class _GameState extends State<Game> {
           }
           break;
         case 'left':
+          // left side
           if (snake.last % rowSize == 0) {
             snake.add(snake.last + rowSize - 1);
           } else {
@@ -162,6 +174,7 @@ class _GameState extends State<Game> {
         default:
       }
 
+      // if the snake ate the food
       if (snake.last == food) {
         score++;
         spawnFood();
@@ -246,10 +259,10 @@ class _GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 90, 227, 110),
+      backgroundColor: const Color.fromARGB(255, 90, 227, 110),
       body: Column(
         children: <Widget>[
-          Padding(padding: EdgeInsets.all(20)),
+          const Padding(padding: EdgeInsets.all(20)),
           Expanded(
               child: GestureDetector(
             onVerticalDragUpdate: (details) {
@@ -261,6 +274,7 @@ class _GameState extends State<Game> {
               }
             },
             onHorizontalDragUpdate: (details) {
+              if (paused) return;
               if (direction != 'right' && details.delta.dx < 0) {
                 direction = 'left';
               } else if (direction != 'left' && details.delta.dx > 0) {
@@ -275,19 +289,19 @@ class _GameState extends State<Game> {
                       crossAxisCount: rowSize),
                   itemCount: numberOfSquares,
                   itemBuilder: ((context, index) {
-                    var color = Color.fromARGB(90, 173, 235, 200);
+                    var color = const Color.fromARGB(90, 173, 235, 200);
                     bool isSnake = false;
                     if (snake.last == index) {
                       /* check's head */
                       isSnake = true;
-                      color = Color.fromARGB(255, 173, 161, 243);
+                      color = const Color.fromARGB(255, 173, 161, 243);
                     } else if (snake.contains(index)) {
-                      /* check's body*/
+                      /* check's body */
                       isSnake = true;
                       color = Colors.lightBlue;
                     } else if (food == index) {
                       /* check's food */
-                      color = Color.fromARGB(255, 213, 1, 44);
+                      color = const Color.fromARGB(255, 213, 1, 44);
                     }
 
                     return Container(
@@ -326,7 +340,7 @@ class _GameState extends State<Game> {
                     style: TextButton.styleFrom(
                         backgroundColor: paused
                             ? Colors.lightBlue
-                            : Color.fromARGB(255, 213, 1, 44),
+                            : const Color.fromARGB(255, 213, 1, 44),
                         minimumSize: const Size(90, 40)),
                     child: Text(
                       paused ? 'Start' : 'Pause',

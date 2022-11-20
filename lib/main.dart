@@ -1,9 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:project/GameMenu.dart';
-import 'Game.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -34,7 +33,7 @@ class HomeSplashScreen extends StatelessWidget {
               fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
         )
       ]),
-      backgroundColor: Color.fromARGB(255, 90, 227, 110),
+      backgroundColor: const Color.fromARGB(255, 90, 227, 110),
       splashIconSize: 500,
       nextScreen: const GameMenu(),
     );
